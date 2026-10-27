@@ -15,7 +15,7 @@ def plotting_av_data(aarstall):
     snodybde_dato = []
     akkumulator = 0
 
-    with open("GitHub/DAT120-vingsoppgave-7-Gruppeprosjekt-del-1/Gruppearbeid/csv_fila/sinnes_2014_2025.csv",
+    with open("GitHub/Oppgave10/Oppgave_7/csv_fila/sinnes_2014_2025.csv",
             "r", encoding = "UTF-8") as fila:
         leser = csv.reader(fila , delimiter=";")
         next(leser)
