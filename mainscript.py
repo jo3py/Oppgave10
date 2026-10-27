@@ -1,0 +1,3 @@
+from plotting_aggregering import plotting_aggregering_csv
+
+plotting_aggregering_csv()
