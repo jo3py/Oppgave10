@@ -18,6 +18,20 @@ normal_dato = []
 
 akkumulator = 0
 
+startverdi = True
+while startverdi:
+    try:
+        aarstall = input("Skriv inn aarstall (yyyy): ")
+        intervall = int(aarstall)
+        if intervall >= 2014 and intervall <= 2025:
+            startverdi = False
+        else:
+            print("Årstallet må være i mellom 2014 og 2025")
+            startverdi = True
+    except ValueError:
+        print("Ugyldig input. Skriv inn et årstall.")
+        startverdi = True
+
 with open("GitHub/Oppgave10/Oppgave_7/csv_fila/sinnes_2014_2025.csv",
         "r", encoding = "UTF-8") as fila:
     leser = csv.reader(fila , delimiter=";")
@@ -28,17 +42,12 @@ with open("GitHub/Oppgave10/Oppgave_7/csv_fila/sinnes_2014_2025.csv",
         nedbor = []
         middeltemperatur = []
         hoyeste_middelvind = []
-
         nedbor_akkumulator = 0
-        akkumulator_months = 0
-        month_controller = []
-        for rad in leser:
-            try:
-                akkumulator_months += 1
-                dato_rad = (rad[2].split("."))
-                month = dato_rad[1]
-                month_controller.append(month)
-                if month == month_controller[akkumulator_months-2] or len(month_controller) == 1:
+        try:
+            for rad in leser:
+                if aarstall in rad[2]:
+                    dato_rad = rad[2].split(".")
+                    if months[month] in dato_rad[1]:
                         try:
                             snodata = float(rad[6])
                             snodybde.append(snodata)
@@ -69,58 +78,38 @@ with open("GitHub/Oppgave10/Oppgave_7/csv_fila/sinnes_2014_2025.csv",
                                 hoyeste_middelvind.append(float(middelvind1))
                                 dato.append(datetime.strptime(rad[2], "%d.%m.%Y"))
                                 normal_dato.append((rad[2]).split("."))
-                else:
-                    try:
-                        if nedbor_akkumulator > 20:
-                            nedbor_month.append(max(nedbor))
-                        
-                        if snodybde == []:
-                            pass
-                        else:
-                            snodybde_month.append(max(snodybde))
-
-                        if middeltemperatur == []:
-                            pass
-                        else:
-                            middeltemperatur_month_maks.append(max(middeltemperatur))
-                            middeltemperatur_month_min.append(min(middeltemperatur))
-            
-                        if hoyeste_middelvind == []:
-                            pass
-                        else:
-                            hoyeste_middelvind_month_maks.append(max(hoyeste_middelvind))
-                    except ValueError or IndexError:
-                        print("Dette er Value eller Index Error!")
-                    finally:
-                        snodybde = []
-                        nedbor = []
-                        middeltemperatur = []
-                        hoyeste_middelvind = []
+                    elif months[month] != dato_rad[1]:
+                        break
+        except ValueError or IndexError:
+            print("Dette er Value eller Index Error!")
+        finally:
+                if nedbor_akkumulator > 20:
+                    nedbor_month.append(max(nedbor))
                 
-                        nedbor_akkumulator = 0
-                        akkumulator_months = 0
-                        month_controller = []
-            except IndexError:
-                pass
-print()
-print("Liste for maks snødybde for hver måned i tidsserien")
-print(snodybde_month)
-print("---")
-print("Liste for maks nedbor for hver måned i tidsserien")
-print(nedbor_month)
-print("---")
-print("Liste for maks middeltemperatur for hver måned i tidsserien")
-print(middeltemperatur_month_maks)
-print("---")
-print("Liste for minimum middeltemperatur for hver måned i tidsserien")
-print(middeltemperatur_month_min)
-print("---")
-print("Liste for maks middelvind for hver måned i tidsserien")
-print(hoyeste_middelvind_month_maks)
-print("---")
-print(len(snodybde_month))
-print(len(nedbor_month))
-print(len(middeltemperatur_month_maks))
-print(len(middeltemperatur_month_min))
-print(len(hoyeste_middelvind_month_maks))
-print()
+                if snodybde == []:
+                    pass
+                else:
+                    snodybde_month.append(max(snodybde))
+
+                if middeltemperatur == []:
+                    pass
+                else:
+                    middeltemperatur_month_maks.append(max(middeltemperatur))
+                    middeltemperatur_month_min.append(min(middeltemperatur))
+    
+                if hoyeste_middelvind == []:
+                    pass
+                else:
+                    hoyeste_middelvind_month_maks.append(max(hoyeste_middelvind))
+
+    print(snodybde_month)
+    print(nedbor_month)
+    print(middeltemperatur_month_maks)
+    print(middeltemperatur_month_min)
+    print(hoyeste_middelvind_month_maks)
+    print(len(snodybde_month))
+    print(len(nedbor_month))
+    print(len(middeltemperatur_month_maks))
+    print(len(middeltemperatur_month_min))
+    print(len(hoyeste_middelvind_month_maks))
+    print()
