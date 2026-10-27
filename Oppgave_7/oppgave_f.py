@@ -15,7 +15,7 @@ def forenklet_plantevekst(aarstall):
         
         total_vekst = 0
 
-        with open(r"GitHub/DAT120-vingsoppgave-7-Gruppeprosjekt-del-1/Gruppearbeid/csv_fila/sinnes_2014_2025.csv", "r", encoding="UTF-8") as fil:
+        with open(r"GitHub/Oppgave10/Oppgave_7/csv_fila/sinnes_2014_2025.csv", "r", encoding="UTF-8") as fil:
             
             lest= csv.DictReader(fil, delimiter=";")
 

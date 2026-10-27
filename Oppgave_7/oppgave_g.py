@@ -1,6 +1,6 @@
 def null_nedbor():
     import csv
-    with open("GitHub/DAT120-vingsoppgave-7-Gruppeprosjekt-del-1/Gruppearbeid/csv_fila/sinnes_2014_2025_med_makstemperatur.csv", "r", encoding="UTF-8") as fila:
+    with open("GitHub/Oppgave10/Oppgave_7/csv_fila/sinnes_2014_2025_med_makstemperatur.csv", "r", encoding="UTF-8") as fila:
         leser =csv.reader(fila, delimiter=";")
 
         next(leser) #Hopper over overskrift
