@@ -7,13 +7,15 @@ def plotting_aggregering_csv():
     import csv
     import matplotlib.pyplot as plt
     from datetime import datetime
+    from datetime import timedelta
 
     snodybde_month = list()
     nedbor_month = []
     middeltemperatur_month_maks = []
     middeltemperatur_month_min = []
     hoyeste_middelvind_month_maks = []
-    dato = []
+    dato_month = []
+    dato_month_nedbor = []
     normal_dato = []
 
     akkumulator = 0
@@ -26,6 +28,7 @@ def plotting_aggregering_csv():
         nedbor = []
         middeltemperatur = []
         hoyeste_middelvind = []
+        dato = []
 
         nedbor_akkumulator = 0
         akkumulator_months = 0
@@ -70,23 +73,33 @@ def plotting_aggregering_csv():
                 else:
                     try:
                         if nedbor_akkumulator > 20:
-                            nedbor_month.append(max(nedbor))
+                            nedbor_month.append(float(max(nedbor)))
+                            dato_month_nedbor.append(dato[nedbor.index(max(nedbor))])
+                            #dato_month_nedbor.append(datetime.strptime(dato_month_nedbor_datetime, "%d.%m.%Y"))
+
                         
                         if snodybde == []:
                             pass
                         else:
-                            snodybde_month.append(max(snodybde))
+                            snodybde_month.append(float(max(snodybde)))
 
                         if middeltemperatur == []:
                             pass
                         else:
-                            middeltemperatur_month_maks.append(max(middeltemperatur))
-                            middeltemperatur_month_min.append(min(middeltemperatur))
+                            middeltemperatur_month_maks.append(float(max(middeltemperatur)))
+                            middeltemperatur_month_min.append(float(min(middeltemperatur)))
             
                         if hoyeste_middelvind == []:
                             pass
                         else:
-                            hoyeste_middelvind_month_maks.append(max(hoyeste_middelvind))
+                            hoyeste_middelvind_month_maks.append(float(max(hoyeste_middelvind)))
+
+                        if dato == []:
+                            pass
+                        else:
+                            dato_month.append(dato[(middeltemperatur.index(max(middeltemperatur)))])
+                            #dato_month.append(datetime.strptime(dato_month_datetime, "%d.%m.%Y"))
+
                     except ValueError or IndexError:
                         print("Dette er Value eller Index Error!")
                     finally:
@@ -94,31 +107,47 @@ def plotting_aggregering_csv():
                         nedbor = []
                         middeltemperatur = []
                         hoyeste_middelvind = []
+                        dato = []
                 
                         nedbor_akkumulator = 0
                         akkumulator_months = 0
                         month_controller = []
             except IndexError:
                 pass
-    print()
-    print("Liste for maks snødybde for hver måned i tidsserien")
-    print(snodybde_month)
-    print("---")
-    print("Liste for maks nedbor for hver måned i tidsserien")
-    print(nedbor_month)
-    print("---")
-    print("Liste for maks middeltemperatur for hver måned i tidsserien")
-    print(middeltemperatur_month_maks)
-    print("---")
-    print("Liste for minimum middeltemperatur for hver måned i tidsserien")
-    print(middeltemperatur_month_min)
-    print("---")
-    print("Liste for maks middelvind for hver måned i tidsserien")
-    print(hoyeste_middelvind_month_maks)
-    print("---")
+
+    plt.subplot (2, 2, 1)
+    plt.legend(snodybde_month)
+    plt.bar(dato_month, snodybde_month, width=timedelta(days=25), label="Snødybde")
+    plt.ylabel("cm")
+    plt.ylim(min(snodybde_month), max(snodybde_month))
+    plt.legend()
+
+    plt.subplot (2, 2, 2)
+    plt.bar(dato_month_nedbor, nedbor_month, width=timedelta(days=25), label = "Nedbør")
+    plt.ylabel("mm")
+    plt.legend()
+
+    plt.subplot (2, 2, 3)
+    plt.bar(dato_month, middeltemperatur_month_maks, width=timedelta(days=25), label = "Middeltemperatur maks")
+    plt.ylabel("grader Celsius")
+    plt.legend()
+
+    plt.subplot (2, 2, 4)
+    plt.bar(dato_month, middeltemperatur_month_min, width=timedelta(days=25), label = "Middeltemperatur min")
+    plt.ylabel("m/s")
+    plt.legend()
+    plt.show()
+
+
+    plt.bar(dato_month, hoyeste_middelvind_month_maks, width=timedelta(days=25), label = "Høyeste_middelvind")
+    plt.ylabel("m/s")
+    plt.legend()
+    plt.show()
+
     print(len(snodybde_month))
     print(len(nedbor_month))
     print(len(middeltemperatur_month_maks))
     print(len(middeltemperatur_month_min))
     print(len(hoyeste_middelvind_month_maks))
-    print()
+    print(len(dato_month))
+    print(len(dato_month_nedbor))
