@@ -2,7 +2,6 @@
 
 def plotting_skisesonger():
     import os
-    from datetime import date
     import matplotlib.pyplot as plt
 
     mappe = os.path.join(os.path.dirname(__file__), "flere_vaerstasjoner_med_makstemperatur")
