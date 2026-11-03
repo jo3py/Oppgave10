@@ -1,7 +1,8 @@
 import csv
 import matplotlib.pyplot as plot
 
-with open(r"C:\Users\vareb\OneDrive\A UIS BACHELOR\Koder DAT-120\Oppgave10\flere_vaerstasjoner_med_makstemperatur\oslo_blindern_1954_2025_med_makstemperatur.csv","r",encoding = "UTF-8") as fila:
+with open(r"C:\Users\vareb\OneDrive\A UIS BACHELOR\Koder DAT-120\Oppgave10\flere_vaerstasjoner_med_makstemperatur\oslo_blindern_" \
+"1954_2025_med_makstemperatur.csv","r",encoding = "UTF-8") as fila:
 
     
     def lag_liste(måned_gitt):
@@ -11,7 +12,8 @@ with open(r"C:\Users\vareb\OneDrive\A UIS BACHELOR\Koder DAT-120\Oppgave10\flere
         for rad in linje:
             try:
                 måned = rad["Tid(norsk normaltid)"].split(".")[1]
-                vind = float(rad["Høyeste middelvind (døgn)"].replace(",","."))
+                vind = float(rad["Høyeste middelvind "
+                "(døgn)"].replace(",","."))
                 if måned == str(måned_gitt):
                         liste_vind.append(vind)
                 
@@ -31,18 +33,23 @@ with open(r"C:\Users\vareb\OneDrive\A UIS BACHELOR\Koder DAT-120\Oppgave10\flere
         if midten % 2 == 1:
             median = liste_vind[midten // 2]
         else:
-            median = (float(liste_vind[midten //2 - 1])+ float(liste_vind[midten // 2])) / 2
+            median = (float(liste_vind[midten //2 - 1])+ 
+                float(liste_vind[midten // 2])) / 2
         måneder.append(i)
         maks_liste.append(max(liste_vind))
         min_liste.append(min(liste_vind))
         median_liste.append(median)
 
+
     plot.plot(måneder, maks_liste, label="Maks")
     plot.plot(måneder, min_liste, label="Min")
     plot.plot(måneder, median_liste, label="Median")
 
+    plot.xticks([1,2,3,4,5,6,7,8,9,10,11,12],["jan","feb",
+    "mar","apr","mai","jun","jul","aug","sept","okt","nov","des"])
     plot.xlabel("Måned")
-    plot.ylabel("Vind")
+    plot.ylabel("Vind m/s")
     plot.title("Vindstatistikk per måned")
+    plot.legend()
     plot.grid()
     plot.show()
