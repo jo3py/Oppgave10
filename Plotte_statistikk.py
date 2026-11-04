@@ -53,3 +53,4 @@ with open(r"C:\Users\vareb\OneDrive\A UIS BACHELOR\Koder DAT-120\Oppgave10\flere
     plot.legend()
     plot.grid()
     plot.show()
+    
