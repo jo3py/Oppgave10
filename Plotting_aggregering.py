@@ -143,11 +143,3 @@ def plotting_aggregering_csv():
     plt.ylabel("m/s")
     plt.legend()
     plt.show()
-
-    print(len(snodybde_month))
-    print(len(nedbor_month))
-    print(len(middeltemperatur_month_maks))
-    print(len(middeltemperatur_month_min))
-    print(len(hoyeste_middelvind_month_maks))
-    print(len(dato_month))
-    print(len(dato_month_nedbor))

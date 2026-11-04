@@ -1,69 +1,64 @@
 
 import csv
-from pathlib import Path
 import matplotlib.pyplot as plt
-def funksjon_c():
-    mappe = Path(__file__).resolve().parent
 
-    filer = {
-        "Oslo Blindern": "oslo_blindern_1954_2025_med_makstemperatur.csv",
-        "Roeros": "roeros_1954_2025_med_makstemperatur.csv",
-        "Tromsoe": "tromsoe_1954_2025_med_makstemperatur.csv",
-        "Vaernes": "vaernes_1954_2025_med_makstemperatur.csv",
-        "Venabu": "venabu_1954_2025_med_makstemperatur.csv"
+def oppgave_c():
+
+    vaerstasjoner = {
+        "oslo": "GitHub/Oppgave10/flere_vaerstasjoner_med_makstemperatur/oslo_blindern_1954_2025_med_makstemperatur.csv",
+        "roeros": "GitHub/Oppgave10/flere_vaerstasjoner_med_makstemperatur/roeros_1954_2025_med_makstemperatur.csv",
+        "tromsoe": "GitHub/Oppgave10/flere_vaerstasjoner_med_makstemperatur/tromsoe_1954_2025_med_makstemperatur.csv",
+        "vaernes": "GitHub/Oppgave10/flere_vaerstasjoner_med_makstemperatur/vaernes_1954_2025_med_makstemperatur.csv",
+        "venabu": "GitHub/Oppgave10/flere_vaerstasjoner_med_makstemperatur/venabu_1954_2025_med_makstemperatur.csv"
     }
 
-    def les_stasjon(filnavn):
-        temperatur_per_aar = {}
+    temperatur_per_aar = {}
 
-        with open(mappe / filnavn, "r", encoding="utf-8") as fil:
-            leser = csv.DictReader(fil, delimiter=";")
+    for stasjon, filnavn in vaerstasjoner.items():
+
+        temperatur_per_aar[stasjon] = {}
+
+        with open(filnavn, "r", encoding="UTF-8") as fil:
+            leser = csv.reader(fil, delimiter=";")
+            next(leser)
 
             for rad in leser:
                 try:
-                    dato = rad["Tid(norsk normaltid)"]
-                    temperatur = rad["Middeltemperatur (døgn)"]
+                    middel_temp = float(rad[3].replace(",", "."))
+                    dato = rad[2]
+                    aar = dato.split(".")[2]
 
-                    if temperatur == "":
-                        continue
+                    if aar not in temperatur_per_aar[stasjon]:
+                        temperatur_per_aar[stasjon][aar] = []
 
-                    temperatur = float(temperatur.replace(",", "."))
+                    temperatur_per_aar[stasjon][aar].append(middel_temp)
 
-                    aar = int(dato.split(".")[2])
+                except (ValueError, IndexError):
+                    continue
 
-                    if aar not in temperatur_per_aar:
-                        temperatur_per_aar[aar] = []
+    plt.figure(figsize=(15, 6))
 
-                    temperatur_per_aar[aar].append(temperatur)
+    for stasjon in temperatur_per_aar:
 
-                except:
-                    pass
-
-        aar_liste = []
+        aar_liste = sorted(temperatur_per_aar[stasjon].keys())
         gjennomsnitt_liste = []
 
-        for aar in sorted(temperatur_per_aar):
+        for aar in aar_liste:
 
-            temperaturer = temperatur_per_aar[aar]
+            temperaturer = temperatur_per_aar[stasjon][aar]
 
             if len(temperaturer) >= 300:
                 gjennomsnitt = sum(temperaturer) / len(temperaturer)
-
-                aar_liste.append(aar)
                 gjennomsnitt_liste.append(gjennomsnitt)
+            else:
+                gjennomsnitt_liste.append(None)
 
-        return aar_liste, gjennomsnitt_liste
+        plt.plot(aar_liste, gjennomsnitt_liste, label=stasjon)
 
-
-
-    for navn, filnavn in filer.items():
-        aar, temperaturer = les_stasjon(filnavn)
-        plt.plot(aar, temperaturer, label=navn)
-
+    plt.xlabel("Årstall")
+    plt.xticks(rotation=45)
+    plt.ylabel("Gjennomsnittstemperatur (°C)")
     plt.title("Gjennomsnittstemperatur per år")
-    plt.xlabel("År")
-    plt.ylabel("Temperatur (°C)")
     plt.legend()
-    plt.grid(True)
+    plt.grid()
     plt.show()
-

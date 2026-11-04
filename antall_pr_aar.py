@@ -8,11 +8,11 @@ import matplotlib.pyplot as plt
 #venabu_vaer = "venabu_1954_2025_med_makstemperatur.csv"
 def funksjon_b():
     vaerstasjoner = {
-        "oslo": "flere_vaerstasjoner_med_makstemperatur/oslo_blindern_1954_2025_med_makstemperatur.csv",
-        "roeros": "flere_vaerstasjoner_med_makstemperatur/roeros_1954_2025_med_makstemperatur.csv",
-        "tromsoe": "flere_vaerstasjoner_med_makstemperatur/tromsoe_1954_2025_med_makstemperatur.csv",
-        "vaernes": "flere_vaerstasjoner_med_makstemperatur/vaernes_1954_2025_med_makstemperatur.csv",
-        "venabu": "flere_vaerstasjoner_med_makstemperatur/venabu_1954_2025_med_makstemperatur.csv"
+        "oslo": "GitHub/Oppgave10/flere_vaerstasjoner_med_makstemperatur/oslo_blindern_1954_2025_med_makstemperatur.csv",
+        "roeros": "GitHub/Oppgave10/flere_vaerstasjoner_med_makstemperatur/roeros_1954_2025_med_makstemperatur.csv",
+        "tromsoe": "GitHub/Oppgave10/flere_vaerstasjoner_med_makstemperatur/tromsoe_1954_2025_med_makstemperatur.csv",
+        "vaernes": "GitHub/Oppgave10/flere_vaerstasjoner_med_makstemperatur/vaernes_1954_2025_med_makstemperatur.csv",
+        "venabu": "GitHub/Oppgave10/flere_vaerstasjoner_med_makstemperatur/venabu_1954_2025_med_makstemperatur.csv"
     }
     vanligdag = 0
     sommerdag = 0
@@ -80,4 +80,3 @@ def funksjon_b():
     plt.legend()
     plt.grid()
     plt.show()
-funksjon_b()

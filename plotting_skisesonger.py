@@ -88,10 +88,3 @@ def plotting_skisesonger():
     plt.grid(True)
     plt.tight_layout()
     plt.show()
-
-
-plotting_skisesonger()
-
-        
-
-
